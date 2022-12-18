@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useUndoRedo } from '../../hooks/useUndoRedo';
 import { Circle } from '../Circle';
 import './styles.css';
 
@@ -10,10 +11,9 @@ export type CircleData = {
 
 export function DrawingBoard() {
   const [circleStack, setCircleStack] = useState<CircleData[]>([]);
-  const [, setUndoCircleStack] = useState<CircleData[]>([]);
+  const [undo, redo, clearStack] = useUndoRedo<CircleData>();
 
-  function handleOnClickCapture(event?: React.MouseEvent<HTMLElement, MouseEvent>) {
-    if (!event || String(event.target) === '[object HTMLButtonElement]') return;
+  function createCircleStack(event: React.MouseEvent<HTMLElement, MouseEvent>) {
     setCircleStack(circles => {
       let lastIndex = 0
       if (circleStack.length > 0) {
@@ -25,33 +25,22 @@ export function DrawingBoard() {
         top: event?.clientY - 10,
       }]
     });
-    setUndoCircleStack([]);
   }
 
-  function isDifLastCircle(circle: CircleData, lastCircle: CircleData) {
-    return circle.index !== lastCircle.index;
+  function handleOnClickCapture(event?: React.MouseEvent<HTMLElement, MouseEvent>) {
+    if (!event || String(event.target) === '[object HTMLButtonElement]') return;
+    createCircleStack(event);
+    clearStack();
   }
 
   function handleOnClickUndo() {
-    setCircleStack(circle => {
-      if (circle.length <= 0) return [];
-      const lastCircle = circle[circle.length - 1];
-      setUndoCircleStack(undoCircle => [...undoCircle, lastCircle]);
-      return [...circle.filter(
-        value => isDifLastCircle(value, lastCircle)
-      )];
-    });
+    const newStack = undo(circleStack);
+    setCircleStack(newStack);
   }
 
   function handleOnClickRedo() {
-    setUndoCircleStack(undoCircle => {
-      if (undoCircle.length <= 0) return [];
-      const lastUndoCircle = undoCircle[undoCircle.length - 1];
-      setCircleStack(circle => [...circle, lastUndoCircle]);
-      return undoCircle.filter(
-        value => isDifLastCircle(value, lastUndoCircle)
-      );
-    });
+    const newStack = redo(circleStack);
+    setCircleStack(newStack);
   }
 
   return(
