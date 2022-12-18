@@ -51,7 +51,7 @@ export function DrawingBoard() {
     >
       <aside>
         <button onClick={handleOnClickUndo}>Undo</button>
-        <button onClick={handleOnClickRedo}>redo</button>
+        <button onClick={handleOnClickRedo}>Redo</button>
       </aside>
       {circleStack.map(circle => (
           <Circle
