@@ -15,7 +15,7 @@ export function useUndoRedo<TypeData>(): [undo<TypeData>, redo<TypeData>, clearS
   }, []);
 
   const redo = useCallback((data: TypeData[]): TypeData[] => {
-    if (!data || data.length <= 0 || stack.length <= 0) return data;
+    if (stack.length <= 0) return data;
     const lastUndoData = stack[stack.length - 1];
     setStack(oldValues => oldValues.filter(oldValue => oldValue !== lastUndoData));
     return [...data, lastUndoData];
