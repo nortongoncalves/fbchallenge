@@ -9,6 +9,6 @@ export function Circle({top = 0, left = 0}: CircleProps) {
   const styles = createStyles({top, left});
 
   return (
-    <div data-testid="circle" className="circle" style={styles}></div>
+    <div data-testid="circle_test_id" className="circle" style={styles}></div>
   );
 }
