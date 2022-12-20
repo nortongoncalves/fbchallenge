@@ -11,7 +11,7 @@ export type CircleData = {
 
 export function DrawingBoard() {
   const [circleStack, setCircleStack] = useState<CircleData[]>([]);
-  const [undo, redo, clearStack] = useUndoRedo<CircleData>();
+  const {undo, redo, clearStack} = useUndoRedo<CircleData>();
 
   function createCircleStack(event: React.MouseEvent<HTMLElement, MouseEvent>) {
     setCircleStack(circles => {
