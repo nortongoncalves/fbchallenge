@@ -22,6 +22,17 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!<rootDir>/node_modules/",
+      "!<rootDir>/src/index.tsx",
+      "!<rootDir>/src/App.tsx",
+      "!<rootDir>/src/reportWebVitals.ts",
+      "!<rootDir>/src/setupTests.ts",
+      "!<rootDir>/src/react-app-env.d.ts"
+    ]
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
