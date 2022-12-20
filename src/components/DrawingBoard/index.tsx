@@ -45,13 +45,14 @@ export function DrawingBoard() {
 
   return(
     <section
+      data-testid="drawing_board_test_id"
       id='drawing_board'
       className='drawing_board'
       onClick={handleOnClickCapture}
     >
       <aside>
-        <button onClick={handleOnClickUndo}>Undo</button>
-        <button onClick={handleOnClickRedo}>Redo</button>
+        <button data-testid="undo_button_test_id" onClick={handleOnClickUndo}>Undo</button>
+        <button data-testid="redo_button_test_id" onClick={handleOnClickRedo}>Redo</button>
       </aside>
       {circleStack.map(circle => (
           <Circle
